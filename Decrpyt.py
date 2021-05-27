@@ -6,7 +6,39 @@ from hashlib import new
 import os, sys, random, struct, os.path, shutil
 import pyAesCrypt
 from bitstring import ConstBitStream
+from Crypto.Cipher import Blowfish
+from struct import pack
 
+question = str(sys.argv[1]) 
+byte_size = os.path.getsize(question)
+bit_size = byte_size * 8 
+b = ConstBitStream(filename = question)
+output = b.read(bit_size) # Reads the first 24 bits (first 3 bytes of the data)
+print(output)
+
+# Blowfish Encryption
+bs = Blowfish.block_size
+key = b'An arbitrarily long key'
+iv = Random.new().read(bs)
+cipher = Blowfish.new(key, Blowfish.MODE_CBC, iv)
+plaintext = output
+plen = bs - divmod(len(plaintext),bs)[1]
+padding = [plen]*plen
+padding = pack('b'*plen, *padding)
+msg = iv + cipher.encrypt(plaintext + padding)
+print(msg)
+
+# Blowfish Decryption
+bs = Blowfish.block_size
+ciphertext = msg
+iv = ciphertext[:bs]
+ciphertext = ciphertext[bs:]
+cipher = Blowfish.new(key, Blowfish.MODE_CBC, iv)
+msg = cipher.decrypt(ciphertext)
+last_byte = msg[-1]
+msg = msg[:- (last_byte if type(last_byte) is int else ord(last_byte))]
+print(repr(msg))
+'''
 def aes_encryption(question): 
     # Defines important variables 
     global aes_en
@@ -55,3 +87,4 @@ if 'txt' in question: # Ensures that the variable is a txt document
         print('Files are already created, check the folder or move folder and try again')
 else:
     print('That is not a valid text file, please try again') 
+'''
