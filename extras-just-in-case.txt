@@ -1,0 +1,91 @@
+#from cryptography.hazmat.backends import default_backend
+#from cryptography.hazmat.primitives import hashes
+#from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+#from cryptography.fernet import Fernet
+'''
+def key():
+    #Create new key everytime and use it
+    key = Fernet.generate_key()
+    file = open('key.key', 'wb')
+    file.write(key) # The key is in bytes
+    file.close()
+
+    file = open('key.key', 'rb')
+    key = file.read()
+    file.close()
+    return(key)
+
+def blowfish_encryption(question, key):
+    bs = Blowfish.block_size
+    iv = Random.new().read(bs)
+    cipher = Blowfish.new(key, Blowfish.MODE_CBC, iv)
+    secret = open(question, 'r')
+    answer = secret.read()
+    secret.close()
+    answer = bytes(answer, encoding='utf-8')
+    plen = bs - divmod(len(answer),bs)[1]
+    padding = [plen]*plen
+    padding = pack('b'*plen, *padding)
+    blow_en = iv + cipher.encrypt(answer + padding)
+    print(blow_en)
+
+def blowfish_decryption(blow_en, key):
+    bs = Blowfish.block_size
+    ciphertext = blow_en
+    iv = ciphertext[:bs]
+    ciphertext = ciphertext[bs:]
+    cipher = Blowfish.new(key, Blowfish.MODE_CBC, iv)
+    msg = cipher.decrypt(ciphertext)
+    last_byte = msg[-1]
+    blow_de = msg[:- (last_byte if type(last_byte) is int else ord(last_byte))]
+    print(blow_de)
+
+def aes_encryption(question, key):
+        # Encode and encrypt the message
+        secret = open(question, 'r')
+        answer = secret.read()
+        secret.close()
+        encoded = answer.encode()
+        f = Fernet(key)
+        encrypted = f.encrypt(encoded)
+        g = open('encrypt.txt', 'w')
+        g.write(str(encrypted))
+        g.close()
+        return(encrypted)
+
+def aes_decryption(encrypted, key):
+        # Decrypt and decode the encrypted message
+        f2 = Fernet(key)
+        decrypted = decrypted = f2.decrypt(encrypted)
+        original_message = decrypted.decode()
+        return(original_message)
+
+question = str(sys.argv[1])
+if "txt" in question:
+    #Create new key everytime and use it
+    key = (key())
+    # Encodes the message
+    aes_en = aes_encryption(question, key)
+    #tre = des_encryption(question, key)
+    # Decodes the message
+    aes_de = aes_decryption(aes_en, key)
+for byte
+
+
+#    blow_en = blowfish_encryption(question, key)
+#    blow_de = blowfish_encryption(blow_en, key)
+    # Print out all the information
+    print("\nAES Cipher text:", aes_en)
+    print("\nAES plain text:", aes_de)
+#    print("\nBlowfish cipher text:", blow_en)
+#    print("\nBlowfish plain text:", blow_de)
+#else:
+ #   print("That is not a valid text file, please try again")
+
+#input("Press any key to continue...")
+
+
+# for [byte] in "unencrypted_file.txt":
+#    byte.encrypt()
+#    file.write
+'''
